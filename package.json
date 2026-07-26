@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "factuweb",
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
@@ -7,7 +7,9 @@
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
-    "hono": "^4.12.32"
+    "fast-xml-parser": "^5.10.1",
+    "hono": "^4.12.32",
+    "node-forge": "^1.4.0"
   },
   "devDependencies": {
     "wrangler": "^4.110.0"
