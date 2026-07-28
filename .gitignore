@@ -1,5 +1,8 @@
 # prod
 dist/
+coverage/
+.nyc_output/
+*.tsbuildinfo
 
 # dev
 .yarn/
@@ -17,8 +20,10 @@ node_modules/
 
 # env
 .env
-.env.production
+.env.*
+!.env.example
 .dev.vars
+.dev.vars.*
 
 # logs
 logs/
@@ -28,6 +33,29 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+
+# IDE
+.vscode/*
+!.vscode/launch.json
+!.vscode/*.code-snippets
+!.vscode/extensions.json
+.idea/
+!.idea/.gitignore
+
+# Package managers
+.yarn/
+!.yarn/releases/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Certificates / keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
 
 # misc
 .DS_Store
