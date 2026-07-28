@@ -3,6 +3,10 @@ import crypto from "node:crypto"
 
 export type Environment = 'testing' | 'production'
 
+export function isEnvironment(value: string): value is Environment {
+    return value === "testing" || value === "production";
+}
+
 export interface BuildLoginTicketRequestProps {
     env: Environment
     cuit: string
