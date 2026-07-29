@@ -1,4 +1,5 @@
 import type { Context, Next } from "hono"
+import { Bindings } from "../types/env.types"
 
 type Env = {
     Bindings: Bindings

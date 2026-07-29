@@ -1,16 +1,6 @@
 import { formatDate } from "../../helpers/datetime"
 import crypto from "node:crypto"
-
-export type Environment = 'testing' | 'production'
-
-export function isEnvironment(value: string): value is Environment {
-    return value === "testing" || value === "production";
-}
-
-export interface BuildLoginTicketRequestProps {
-    env: Environment
-    cuit: string
-}
+import { BuildLoginTicketRequestProps } from "../../types/arca.types"
 
 export function buildLoginTicketRequest({ env, cuit }: BuildLoginTicketRequestProps): string {
     const uniqueId = crypto.getRandomValues(new Uint32Array(1))[0]

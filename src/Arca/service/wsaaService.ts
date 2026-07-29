@@ -1,7 +1,7 @@
 import { signCms } from "../../helpers/crypto";
-import type { LoginCmsResponse } from "../../types/arca.types";
+import type { Environment, LoginCmsResponse } from "../../types/arca.types";
 import { envelope } from "../xmlBuilders/buildEnvelope";
-import { buildLoginTicketRequest, type Environment } from "../xmlBuilders/buildLoginTicketRequest";
+import { buildLoginTicketRequest } from "../xmlBuilders/buildLoginTicketRequest";
 import { parseLoginCmsResult } from "../xmlParser/wsaaParser";
 
 interface GetArcaTAProps {
