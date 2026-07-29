@@ -21,6 +21,9 @@ importers:
         specifier: ^1.10.0
         version: 1.10.0(supports-color@10.2.2)
     devDependencies:
+      '@cloudflare/workers-types':
+        specifier: ^5.20260728.1
+        version: 5.20260728.1
       '@jest/globals':
         specifier: ^30.4.1
         version: 30.4.1(supports-color@10.2.2)
@@ -38,7 +41,7 @@ importers:
         version: 29.4.12(@babel/core@7.29.7(supports-color@10.2.2))(@jest/transform@30.4.1(supports-color@10.2.2))(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.29.7(supports-color@10.2.2))(supports-color@10.2.2))(esbuild@0.28.1)(jest-util@30.4.1)(jest@30.4.2(@types/node@26.1.1)(supports-color@10.2.2))(typescript@6.0.3)
       wrangler:
         specifier: ^4.110.0
-        version: 4.114.0
+        version: 4.114.0(@cloudflare/workers-types@5.20260728.1)
 
 packages:
 
@@ -249,6 +252,9 @@ packages:
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
+
+  '@cloudflare/workers-types@5.20260728.1':
+    resolution: {integrity: sha512-rZqmesLEH40Xt67PpQSj+iJqwkYBzVr7U/UOa5twkToMsxO5pYsPw2QAaTKDdiCSiki9fWAgsWTj9OmFnbwLRQ==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -2253,6 +2259,8 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20260722.1':
     optional: true
 
+  '@cloudflare/workers-types@5.20260728.1': {}
+
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
@@ -4113,7 +4121,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260722.1
       '@cloudflare/workerd-windows-64': 1.20260722.1
 
-  wrangler@4.114.0:
+  wrangler@4.114.0(@cloudflare/workers-types@5.20260728.1):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.5.0
       '@cloudflare/unenv-preset': 2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260722.1)
@@ -4124,6 +4132,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20260722.1
     optionalDependencies:
+      '@cloudflare/workers-types': 5.20260728.1
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil

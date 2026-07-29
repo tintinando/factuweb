@@ -14,6 +14,7 @@
     "soap": "^1.10.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260728.1",
     "@jest/globals": "^30.4.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.1.1",
