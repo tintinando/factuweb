@@ -1,4 +1,5 @@
 export function formatDate(date: Date, timeZone = "America/Argentina/Buenos_Aires") {
+
     const parts = new Intl.DateTimeFormat("sv-SE", {
         timeZone,
         year: "numeric",
@@ -13,5 +14,5 @@ export function formatDate(date: Date, timeZone = "America/Argentina/Buenos_Aire
 
     const p = Object.fromEntries(parts.map(x => [x.type, x.value]));
 
-    return `${p.year}${p.month}${p.day}T${p.hour}:${p.minute}:${p.second}${p.timeZoneName.replace("GMT", "")}`;
+    return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}${p.timeZoneName.replace("GMT", "").replace(/\u2212/g, "-")}`;
 }

@@ -44,6 +44,8 @@ export async function getArcaTA(
         privateKeyPem: key
     })
 
+    console.log(buildLoginTicketRequest({ env: environment, cuit }))
+
     // controlador para cancelar consulta
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), TIMEOUT)
@@ -58,6 +60,8 @@ export async function getArcaTA(
             body: envelope(rawCms),
             signal: controller.signal
         })
+
+        console.log(envelope(rawCms))
 
         const xml = await response.text()
 

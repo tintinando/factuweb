@@ -17,12 +17,17 @@ auth.get("/", async (c) => {
         ? c.env.ENVIRONMENT
         : "testing"
 
-    const ticket: LoginCmsResponse = await getArcaTA({
-        environment,
-        cuit: c.env.CUIT,
-        pem: c.env.CERT_PEM,
-        key: c.env.PRIVATE_KEY
-    })
+    try {
 
-    return c.json(ticket)
+        const ticket: LoginCmsResponse = await getArcaTA({
+            environment,
+            cuit: c.env.CUIT,
+            pem: c.env.CERT_PEM,
+            key: c.env.PRIVATE_KEY
+        })
+
+        return c.json(ticket)
+    } catch (e) {
+        return c.text(`Error ${e}`)
+    }
 })

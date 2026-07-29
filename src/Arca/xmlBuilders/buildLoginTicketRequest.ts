@@ -22,9 +22,7 @@ export function buildLoginTicketRequest({ env, cuit }: BuildLoginTicketRequestPr
     return `<?xml version="1.0" encoding="UTF-8"?>
     <loginTicketRequest version="1.0">
     <header>
-        <destination>
-            cn=${env === 'testing' ? 'wsaahomo' : 'wsaa'},o=afip,c=ar,serialNumber=CUIT ${strCuit}
-        </destination>
+        <destination>cn=${env === 'testing' ? 'wsaahomo' : 'wsaa'},o=afip,c=ar,serialNumber=CUIT ${strCuit}</destination>
         <uniqueId>${uniqueId}</uniqueId>
         <generationTime>${formatDate(now)}</generationTime>
         <expirationTime>${formatDate(plus12)}</expirationTime>
