@@ -6,6 +6,17 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "vars": {
+    "ENVIRONMENT": "development",
+  },
+  "env": {
+    "production": {
+      "name": "factuweb-prod",
+      "vars": {
+        "ENVIRONMENT": "production"
+      }
+    }
+  },
   "observability": {
     "enabled": false,
     "head_sampling_rate": 1,
@@ -20,34 +31,11 @@
       "persist": true,
       "head_sampling_rate": 1
     }
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "AFIP_CACHE",
+      "id": "986f7c46cb174e9daa3ab7cffef7f1e7"
+    }
+  ]
 }
-// "vars": {
-//   "MY_VAR": "my-variable"
-// },
-// "kv_namespaces": [
-//   {
-//     "binding": "MY_KV_NAMESPACE",
-//     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-//   }
-// ],
-// "r2_buckets": [
-//   {
-//     "binding": "MY_BUCKET",
-//     "bucket_name": "my-bucket"
-//   }
-// ],
-// "d1_databases": [
-//   {
-//     "binding": "MY_DB",
-//     "database_name": "my-database",
-//     "database_id": ""
-//   }
-// ],
-// "ai": {
-//   "binding": "AI"
-// },
-// "observability": {
-//   "enabled": true,
-//   "head_sampling_rate": 1
-// }
