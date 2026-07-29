@@ -1,8 +1,7 @@
 import { getArcaTA } from "./wsaaService";
-import type { Environment } from "../xmlBuilders/buildLoginTicketRequest";
-import { CachedTA } from "../../types/arca.types";
+import { CachedTA, Environment, LoginCmsResponse } from "../../types/arca.types";
 
-interface GetValidArcaTAParams {
+interface GetCachedArcaTAParams {
     env: {
         AFIP_CACHE: KVNamespace;
         AFIP_CUIT: string;
@@ -13,7 +12,15 @@ interface GetValidArcaTAParams {
     forceRefresh?: boolean; // Opción para bypass de cache
 }
 
-export async function getValidArcaTA({ env, forceRefresh = false }: GetValidArcaTAParams) {
+/**
+ * Consulta la WSAA de AFIP usando el servicio GetArcaTA y guarda los token
+ * obtenidos en la cache de Cloudflare KV, de modo que persistan 12 horas
+ * @param param0 
+ * @returns 
+ */
+export async function getCachedArcaTA(
+    { env, forceRefresh = false }: GetCachedArcaTAParams
+): Promise<LoginCmsResponse> {
     const { AFIP_CACHE, AFIP_CUIT, AFIP_CERT_PEM, AFIP_PRIVATE_KEY, ENVIRONMENT } = env;
     const cacheKey = `afip_ta_${ENVIRONMENT}_${AFIP_CUIT}`;
 
@@ -28,7 +35,7 @@ export async function getValidArcaTA({ env, forceRefresh = false }: GetValidArca
             const FIVE_MINUTES = 5 * 60 * 1000;
 
             if (expiresAt - now > FIVE_MINUTES) {
-                return { token: cachedData.token, sign: cachedData.sign };
+                return cachedData
             }
         }
     }
@@ -42,8 +49,11 @@ export async function getValidArcaTA({ env, forceRefresh = false }: GetValidArca
     });
 
     // 3. Guardamos en Cloudflare KV con expirationTtl (11.5 horas en segundos = 41400)
-    // Nota: Cloudflare exige un mínimo de 60 segundos para expirationTtl
-    const TTL_SECONDS = 11.5 * 3600; // 41.400 segundos
+    const expiresAt = new Date(freshTA.expirationTime).getTime();
+    const ttl = Math.max(
+        60,
+        Math.floor((expiresAt - Date.now()) / 1000)
+    );
 
     await AFIP_CACHE.put(
         cacheKey,
@@ -52,11 +62,8 @@ export async function getValidArcaTA({ env, forceRefresh = false }: GetValidArca
             sign: freshTA.sign,
             expirationTime: freshTA.expirationTime
         }),
-        { expirationTtl: TTL_SECONDS }
+        { expirationTtl: ttl }
     );
 
-    return {
-        token: freshTA.token,
-        sign: freshTA.sign
-    };
+    return freshTA
 }
