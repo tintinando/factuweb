@@ -1,7 +1,8 @@
 import { signCms } from "../../helpers/crypto";
+import type { LoginCmsResponse } from "../../types/arca.types";
 import { envelope } from "../xmlBuilders/buildEnvelope";
 import { buildLoginTicketRequest, type Environment } from "../xmlBuilders/buildLoginTicketRequest";
-import { LoginCmsResponse, parseLoginCmsResult } from "../xmlParser/wsaaParser";
+import { parseLoginCmsResult } from "../xmlParser/wsaaParser";
 
 interface GetArcaTAProps {
     environment: Environment
@@ -44,8 +45,6 @@ export async function getArcaTA(
         privateKeyPem: key
     })
 
-    console.log(buildLoginTicketRequest({ env: environment, cuit }))
-
     // controlador para cancelar consulta
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), TIMEOUT)
@@ -60,8 +59,6 @@ export async function getArcaTA(
             body: envelope(rawCms),
             signal: controller.signal
         })
-
-        console.log(envelope(rawCms))
 
         const xml = await response.text()
 

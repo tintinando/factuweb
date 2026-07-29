@@ -1,9 +1,5 @@
 import { XMLParser } from "fast-xml-parser";
-
-export interface LoginCmsResponse {
-   token: string,
-   sign: string
-}
+import type { LoginCmsResponse } from "../../types/arca.types";
 
 const parser = new XMLParser({
    ignoreAttributes: true,
@@ -39,6 +35,7 @@ export function parseLoginCmsResult(xml: string): LoginCmsResponse {
 
    return {
       token: credentials.token,
-      sign: credentials.sign
+      sign: credentials.sign,
+      expirationTime: parsedTicket.header.expirationTime
    }
 }
