@@ -3,13 +3,6 @@ import type { LoginCmsResponse } from "../Arca/xmlParser/wsaaParser";
 import { getArcaTA } from "../Arca/service/wsaaService";
 import { Environment, isEnvironment } from "../Arca/xmlBuilders/buildLoginTicketRequest";
 
-type Bindings = {
-    CERT_PEM: string,
-    CUIT: string,
-    ENVIRONMENT: string,
-    PRIVATE_KEY: string
-}
-
 export const auth = new Hono<{ Bindings: Bindings }>()
 
 auth.get("/", async (c) => {
