@@ -1,15 +1,10 @@
 import { getArcaTA } from "./wsaaService";
 import { CachedTA, LoginCmsResponse } from "../../types/arca.types";
-import { Environment } from "../../types/env.types";
+import { AfipConfig } from "../../config/afipConfig";
 
 interface GetCachedArcaTAParams {
-    env: {
-        AFIP_CACHE: KVNamespace;
-        AFIP_CUIT: string;
-        AFIP_CERT_PEM: string;
-        AFIP_PRIVATE_KEY: string;
-        ENVIRONMENT: Environment;
-    };
+    cache: KVNamespace
+    config: AfipConfig
     forceRefresh?: boolean; // Opción para bypass de cache
 }
 
@@ -20,14 +15,14 @@ interface GetCachedArcaTAParams {
  * @returns 
  */
 export async function getCachedArcaTA(
-    { env, forceRefresh = false }: GetCachedArcaTAParams
+    { cache, config, forceRefresh = false }: GetCachedArcaTAParams
 ): Promise<LoginCmsResponse> {
-    const { AFIP_CACHE, AFIP_CUIT, AFIP_CERT_PEM, AFIP_PRIVATE_KEY, ENVIRONMENT } = env;
-    const cacheKey = `afip_ta_${ENVIRONMENT}_${AFIP_CUIT}`;
+    const { cuit, pem, key, environment } = config;
+    const cacheKey = `afip_ta_${environment}_${cuit}`;
 
     // 1. Si no se fuerza el refresco, intentamos leer desde KV
     if (!forceRefresh) {
-        const cachedData = await AFIP_CACHE.get<CachedTA>(cacheKey, "json");
+        const cachedData = await cache.get<CachedTA>(cacheKey, "json");
 
         if (cachedData) {
             // Verificamos si aún le queda margen de tiempo (ej. más de 5 minutos antes de expirar)
@@ -42,12 +37,7 @@ export async function getCachedArcaTA(
     }
 
     // 2. Si no hay cache, está vencido o forceRefresh es true, consultamos a WSAA
-    const freshTA = await getArcaTA({
-        environment: ENVIRONMENT,
-        cuit: AFIP_CUIT,
-        pem: AFIP_CERT_PEM,
-        key: AFIP_PRIVATE_KEY
-    });
+    const freshTA = await getArcaTA(config);
 
     // 3. Guardamos en Cloudflare KV con expirationTtl (11.5 horas en segundos = 41400)
     const expiresAt = new Date(freshTA.expirationTime).getTime();
@@ -56,7 +46,7 @@ export async function getCachedArcaTA(
         Math.floor((expiresAt - Date.now()) / 1000)
     );
 
-    await AFIP_CACHE.put(
+    await cache.put(
         cacheKey,
         JSON.stringify({
             token: freshTA.token,
