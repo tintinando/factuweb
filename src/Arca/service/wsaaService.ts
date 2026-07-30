@@ -1,23 +1,11 @@
+import { AfipConfig } from "../../config/afipConfig";
 import { signCms } from "../../helpers/crypto";
-import type { Environment, LoginCmsResponse } from "../../types/arca.types";
+import type { LoginCmsResponse } from "../../types/arca.types";
 import { envelope } from "../xmlBuilders/buildEnvelope";
 import { buildLoginTicketRequest } from "../xmlBuilders/buildLoginTicketRequest";
 import { parseLoginCmsResult } from "../xmlParser/wsaaParser";
 
-interface GetArcaTAProps {
-    environment: Environment
-    cuit: string
-    pem: string
-    key: string
-}
-
 const TIMEOUT = 15000
-
-const url = (environment: Environment): string =>
-    environment === "testing"
-        ? "https://wsaahomo.afip.gov.ar/ws/services/LoginCms"
-        : "https://wsaa.afip.gov.ar/ws/services/LoginCms"
-
 
 /**
  * Obtiene un Ticket de Acceso (TA) desde el WSAA de ARCA/AFIP.
@@ -35,14 +23,16 @@ const url = (environment: Environment): string =>
  * - El WSAA responde con un código HTTP distinto de 2xx.
  * - La respuesta XML no puede interpretarse o representa un error SOAP.
  */
-export async function getArcaTA(
-    { environment, cuit, pem, key }: GetArcaTAProps
-): Promise<LoginCmsResponse> {
+export async function getArcaTA(config: AfipConfig): Promise<LoginCmsResponse> {
+
+    const url = config.environment === "testing"
+        ? "https://wsaahomo.afip.gov.ar/ws/services/LoginCms"
+        : "https://wsaa.afip.gov.ar/ws/services/LoginCms"
 
     const rawCms = signCms({
-        xml: buildLoginTicketRequest({ env: environment, cuit }),
-        certificatePem: pem,
-        privateKeyPem: key
+        xml: buildLoginTicketRequest({ env: config.environment, cuit: config.cuit }),
+        certificatePem: config.pem,
+        privateKeyPem: config.key
     })
 
     // controlador para cancelar consulta
@@ -50,7 +40,7 @@ export async function getArcaTA(
     const timeoutId = setTimeout(() => controller.abort(), TIMEOUT)
 
     try {
-        const response = await fetch(url(environment), {
+        const response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "text/xml; charset=utf-8",

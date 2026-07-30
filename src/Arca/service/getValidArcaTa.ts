@@ -1,5 +1,6 @@
 import { getArcaTA } from "./wsaaService";
-import { CachedTA, Environment, LoginCmsResponse } from "../../types/arca.types";
+import { CachedTA, LoginCmsResponse } from "../../types/arca.types";
+import { Environment } from "../../types/env.types";
 
 interface GetCachedArcaTAParams {
     env: {

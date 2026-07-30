@@ -1,8 +1,4 @@
-export type Environment = 'testing' | 'production'
-
-export function isEnvironment(value: string): value is Environment {
-    return value === "testing" || value === "production";
-}
+import { Environment } from "./env.types";
 
 export interface BuildLoginTicketRequestProps {
     env: Environment

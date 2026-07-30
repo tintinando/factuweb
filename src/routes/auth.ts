@@ -1,22 +1,16 @@
 import { Hono } from "hono";
 import { getArcaTA } from "../Arca/service/wsaaService";
-import { Environment, isEnvironment, LoginCmsResponse } from "../types/arca.types";
 import { Bindings } from "../types/env.types";
+import { afipConfig } from "../config/afipConfig";
+import { LoginCmsResponse } from "../types/arca.types";
 
 export const auth = new Hono<{ Bindings: Bindings }>()
 
 auth.get("/", async (c) => {
-    const environment: Environment = isEnvironment(c.env.ENVIRONMENT)
-        ? c.env.ENVIRONMENT
-        : "testing"
+    const config = afipConfig(c)
 
     try {
-        const ticket: LoginCmsResponse = await getArcaTA({
-            environment,
-            cuit: c.env.CUIT,
-            pem: c.env.CERT_PEM,
-            key: c.env.PRIVATE_KEY
-        })
+        const ticket: LoginCmsResponse = await getArcaTA(config)
 
         return c.json(ticket)
     } catch (e) {
