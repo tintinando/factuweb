@@ -27,16 +27,20 @@ export function parseLoginCmsResult(xml: string): LoginCmsResponse {
    }
 
    const parsedTicket = parser.parse(innerXml)
-   const credentials = parsedTicket?.loginTicketResponse?.credentials
+   const ticket = parsedTicket?.loginTicketResponse
 
-   if (!credentials?.token || !credentials?.sign) {
+   if (!ticket) {
+      throw new Error("Formato de loginTicketResponse inválido")
+   }
+
+   if (!ticket.credentials?.token || !ticket.credentials?.sign) {
       throw new Error("El ticket de acceso no contiene las credenciales")
    }
 
    return {
-      token: credentials.token,
-      sign: credentials.sign,
-      expirationTime: parsedTicket.header.expirationTime ?? ''
+      token: ticket.credentials.token,
+      sign: ticket.credentials.sign,
+      expirationTime: ticket.header?.expirationTime ?? ''
    }
 }
 
