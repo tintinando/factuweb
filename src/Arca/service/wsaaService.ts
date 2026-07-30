@@ -4,6 +4,7 @@ import type { LoginCmsResponse } from "../../types/arca.types";
 import { envelope } from "../xmlBuilders/buildEnvelope";
 import { buildLoginTicketRequest } from "../xmlBuilders/buildLoginTicketRequest";
 import { parseLoginCmsResult } from "../xmlParser/wsaaParser";
+import { parseLoginCmsErrorResult } from "../xmlParser/wsaaErrorParser";
 
 const TIMEOUT = 15000
 
@@ -53,7 +54,10 @@ export async function getArcaTA(config: AfipConfig): Promise<LoginCmsResponse> {
         const xml = await response.text()
 
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${xml}`)
+            const fault = parseLoginCmsErrorResult(xml)
+            throw new Error(
+                `HTTP ${response.status}: ${fault.faultcode} - ${fault.faultstring}`
+            )
         }
 
         return parseLoginCmsResult(xml)
