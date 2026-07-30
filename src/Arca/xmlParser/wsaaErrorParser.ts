@@ -1,0 +1,28 @@
+import { XMLParser } from "fast-xml-parser"
+
+const parser = new XMLParser({
+    ignoreAttributes: true,
+    trimValues: true,
+    removeNSPrefix: true
+});
+
+export function parseLoginCmsErrorResult(xml: string) {
+    return parser.parse(xml).Envelope.Body.Fault;
+}
+
+/*
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<soapenv:Body>
+    <soapenv:Fault>
+        <faultcode xmlns:ns1="http://xml.apache.org/axis/">ns1:coe.alreadyAuthenticated</faultcode>
+        <faultstring>El CEE ya posee un TA valido para el acceso al WSN solicitado</faultstring>
+        <detail>
+            <ns2:exceptionName xmlns:ns2="http://xml.apache.org/axis/">gov.afip.desein.dvadac.sua.view.wsaa.LoginFault
+            </ns2:exceptionName>
+            <ns3:hostname xmlns:ns3="http://xml.apache.org/axis/">wsaaext0.homo.afip.gov.ar
+            </ns3:hostname>
+        </detail>
+    </soapenv:Fault>
+</soapenv:Body>
+</soapenv:Envelope>`
+*/
