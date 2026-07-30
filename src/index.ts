@@ -4,6 +4,18 @@ import { authMiddleware } from './middleware/auth.middleware'
 
 const app = new Hono()
 
+app.onError((err, c) => {
+  console.error(err)
+
+  return c.json(
+    {
+      error: "Internal Server Error",
+      message: err.message,
+    },
+    500
+  )
+})
+
 app.get('/', (c) => {
   return c.text('Referirse a la documentacion')
 })
