@@ -26,10 +26,6 @@ const TIMEOUT = 15000
  */
 export async function getArcaTA(config: AfipConfig): Promise<LoginCmsResponse> {
 
-    const url = config.environment === "testing"
-        ? "https://wsaahomo.afip.gov.ar/ws/services/LoginCms"
-        : "https://wsaa.afip.gov.ar/ws/services/LoginCms"
-
     const rawCms = signCms({
         xml: buildLoginTicketRequest({ env: config.environment, cuit: config.cuit }),
         certificatePem: config.pem,
@@ -41,7 +37,7 @@ export async function getArcaTA(config: AfipConfig): Promise<LoginCmsResponse> {
     const timeoutId = setTimeout(() => controller.abort(), TIMEOUT)
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch(config.urls.wsaa, {
             method: "POST",
             headers: {
                 "Content-Type": "text/xml; charset=utf-8",
