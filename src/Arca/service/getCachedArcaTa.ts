@@ -1,5 +1,5 @@
 import { getArcaTA } from './wsaaService';
-import { CachedTA, LoginCmsResponse } from '../../types/arca.types';
+import { CachedTA, LoginCmsResponse } from '../types';
 import { AfipConfig } from '../../config/afipConfig';
 
 interface GetCachedArcaTAParams {

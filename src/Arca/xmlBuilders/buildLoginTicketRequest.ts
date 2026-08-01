@@ -1,6 +1,6 @@
 import { formatDate } from '../../helpers/datetime';
 import crypto from 'node:crypto';
-import { BuildLoginTicketRequestProps } from '../../types/arca.types';
+import { BuildLoginTicketRequestProps } from '../types';
 
 export function buildLoginTicketRequest({
   env,

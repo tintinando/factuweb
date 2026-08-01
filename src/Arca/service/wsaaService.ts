@@ -1,6 +1,6 @@
 import { AfipConfig } from '../../config/afipConfig';
 import { signCms } from '../../helpers/crypto';
-import type { LoginCmsResponse } from '../../types/arca.types';
+import type { LoginCmsResponse } from '../types';
 import { envelope } from '../xmlBuilders/buildEnvelope';
 import { buildLoginTicketRequest } from '../xmlBuilders/buildLoginTicketRequest';
 import { parseLoginCmsResult } from '../xmlParser/wsaaParser';

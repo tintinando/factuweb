@@ -1,4 +1,4 @@
-import { BuildWsfeRequestProps, WsfeDetalle } from './types';
+import { BuildWsfeRequestProps, WsfeDetalle } from '../types';
 
 function renderDetalle(det: WsfeDetalle): string {
   return /* HTML */ `
