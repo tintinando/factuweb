@@ -3,11 +3,9 @@
   "name": "factuweb",
   "main": "src/index.ts",
   "compatibility_date": "2026-07-26",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
   "vars": {
-    "ENVIRONMENT": "testing",
+    "ENVIRONMENT": "testing"
   },
   "env": {
     "production": {

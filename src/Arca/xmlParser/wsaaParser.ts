@@ -1,52 +1,51 @@
-import { XMLParser } from "fast-xml-parser";
-import type { LoginCmsResponse } from "../../types/arca.types";
+import { XMLParser } from 'fast-xml-parser';
+import type { LoginCmsResponse } from '../../types/arca.types';
 
 const parser = new XMLParser({
-   ignoreAttributes: true,
-   trimValues: true,
-   removeNSPrefix: true
+  ignoreAttributes: true,
+  trimValues: true,
+  removeNSPrefix: true
 });
 
 export function parseLoginCmsResult(xml: string): LoginCmsResponse {
-   const parsed = parser.parse(xml);
-   const body = parsed?.Envelope?.Body
+  const parsed = parser.parse(xml);
+  const body = parsed?.Envelope?.Body;
 
-   if (!body) {
-      throw new Error("Estructura de respuesta del SOAP inválida")
-   }
+  if (!body) {
+    throw new Error('Estructura de respuesta del SOAP inválida');
+  }
 
-   if (body.Fault) {
-      const faultMsg = body.Fault.faultstring || "Error desconocido en el WSAA"
-      throw new Error(`Error en la respuesta SOAP: ${faultMsg}`);
-   }
+  if (body.Fault) {
+    const faultMsg = body.Fault.faultstring || 'Error desconocido en el WSAA';
+    throw new Error(`Error en la respuesta SOAP: ${faultMsg}`);
+  }
 
-   const innerXml = body.loginCmsResponse?.loginCmsReturn
+  const innerXml = body.loginCmsResponse?.loginCmsReturn;
 
-   if (!innerXml) {
-      throw new Error("No se encontró el nodo loginCmsReturn en la respuesta")
-   }
+  if (!innerXml) {
+    throw new Error('No se encontró el nodo loginCmsReturn en la respuesta');
+  }
 
-   const parsedTicket = parser.parse(innerXml)
-   const ticket = parsedTicket?.loginTicketResponse
+  const parsedTicket = parser.parse(innerXml);
+  const ticket = parsedTicket?.loginTicketResponse;
 
-   if (!ticket) {
-      throw new Error("Formato de loginTicketResponse inválido")
-   }
+  if (!ticket) {
+    throw new Error('Formato de loginTicketResponse inválido');
+  }
 
-   if (!ticket.credentials?.token || !ticket.credentials?.sign) {
-      throw new Error("El ticket de acceso no contiene las credenciales")
-   }
+  if (!ticket.credentials?.token || !ticket.credentials?.sign) {
+    throw new Error('El ticket de acceso no contiene las credenciales');
+  }
 
-   return {
-      token: ticket.credentials.token,
-      sign: ticket.credentials.sign,
-      expirationTime: ticket.header?.expirationTime ?? ''
-   }
+  return {
+    token: ticket.credentials.token,
+    sign: ticket.credentials.sign,
+    expirationTime: ticket.header?.expirationTime ?? ''
+  };
 }
 
-
-`
-"<?xml version=\"1.0\" encoding=\"utf-8\"?>
+/*
+<?xml version=\"1.0\" encoding=\"utf-8\"?>
 <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">
 <soapenv:Body>
 <loginCmsResponse xmlns=\"http://wsaa.view.sua.dvadac.desein.afip.gov\">
@@ -55,5 +54,4 @@ export function parseLoginCmsResult(xml: string): LoginCmsResponse {
 </loginCmsResponse>
 </soapenv:Body>
 </soapenv:Envelope>
-"
-`
+*/

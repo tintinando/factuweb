@@ -1,13 +1,13 @@
-import { XMLParser } from "fast-xml-parser"
+import { XMLParser } from 'fast-xml-parser';
 
 const parser = new XMLParser({
-    ignoreAttributes: true,
-    trimValues: true,
-    removeNSPrefix: true
+  ignoreAttributes: true,
+  trimValues: true,
+  removeNSPrefix: true
 });
 
 export function parseLoginCmsErrorResult(xml: string) {
-    return parser.parse(xml).Envelope.Body.Fault;
+  return parser.parse(xml).Envelope.Body.Fault;
 }
 
 /*
