@@ -19,6 +19,7 @@
     "@types/jest": "30.0.0",
     "@types/node": "26.1.2",
     "@types/node-forge": "1.3.14",
+    "prettier": "^3.9.6",
     "ts-jest": "29.4.12",
     "wrangler": "4.118.0"
   }
