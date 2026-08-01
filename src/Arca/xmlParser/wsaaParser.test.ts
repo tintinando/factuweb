@@ -50,7 +50,8 @@ describe('parseLoginCmsResult', () => {
 
     expect(result).toEqual({
       token: 'myBeautifulToken',
-      sign: 'myAwfulSign'
+      sign: 'myAwfulSign',
+      expirationTime: '2026-07-27T12:12:34.261-03:00'
     });
   });
 
