@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
 import { Env } from '../types/env.types';
 import { afipConfig } from '../config/afipConfig';
-import { getCachedArcaTA } from '../Arca/service/getCachedArcaTa';
-import { LoginCmsResponse } from '../Arca/types';
+import { LoginCmsResponse } from '../Arca/wsaa/types';
+import { getCachedArcaTA } from '../Arca/wsaa/service/getCachedArcaTa';
 
 export const auth = new Hono<Env>();
 

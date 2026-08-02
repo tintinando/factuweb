@@ -1,5 +1,5 @@
-import { formatDate } from '../../helpers/datetime';
 import crypto from 'node:crypto';
+import { formatDate } from '../../../helpers/datetime';
 import { BuildLoginTicketRequestProps } from '../types';
 
 export function buildLoginTicketRequest({
@@ -11,15 +11,12 @@ export function buildLoginTicketRequest({
   const now = new Date();
   const plus12 = new Date(now.getTime() + 12 * 60 * 60 * 1000);
 
-  return /* HTML */ `<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <loginTicketRequest version="1.0">
       <header>
-        <destination
-          >cn=${env === 'testing'
-            ? 'wsaahomo'
-            : 'wsaa'},o=afip,c=ar,serialNumber=CUIT
-          ${cuit}</destination
-        >
+        <destination>cn=${
+          env === 'testing' ? 'wsaahomo' : 'wsaa'
+        },o=afip,c=ar,serialNumber=CUIT ${cuit}</destination>
         <uniqueId>${uniqueId}</uniqueId>
         <generationTime>${formatDate(now)}</generationTime>
         <expirationTime>${formatDate(plus12)}</expirationTime>

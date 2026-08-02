@@ -1,10 +1,10 @@
-import { AfipConfig } from '../../config/afipConfig';
-import { signCms } from '../../helpers/crypto';
-import type { LoginCmsResponse } from '../types';
+import { AfipConfig } from '../../../config/afipConfig';
+import { signCms } from '../../../helpers/crypto';
 import { envelope } from '../xmlBuilders/buildEnvelope';
 import { buildLoginTicketRequest } from '../xmlBuilders/buildLoginTicketRequest';
 import { parseLoginCmsResult } from '../xmlParser/wsaaParser';
 import { parseLoginCmsErrorResult } from '../xmlParser/wsaaErrorParser';
+import { LoginCmsResponse } from '../types';
 
 const TIMEOUT = 15000;
 

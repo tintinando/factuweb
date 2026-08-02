@@ -1,6 +1,6 @@
-import { getArcaTA } from './wsaaService';
+import { AfipConfig } from '../../../config/afipConfig';
 import { CachedTA, LoginCmsResponse } from '../types';
-import { AfipConfig } from '../../config/afipConfig';
+import { getArcaTA } from './wsaaService';
 
 interface GetCachedArcaTAParams {
   cache: KVNamespace;

@@ -1,7 +1,7 @@
 import { BuildWsfeRequestProps, WsfeDetalle } from '../types';
 
 function renderDetalle(det: WsfeDetalle): string {
-  return /* HTML */ `
+  return `
     <ar:FECAEDetRequest>
       <ar:Concepto>${det.concepto}</ar:Concepto>
       <ar:DocTipo>${det.docTipo}</ar:DocTipo>
@@ -15,25 +15,34 @@ function renderDetalle(det: WsfeDetalle): string {
       <ar:ImpOpEx>${det.impOpEx}</ar:ImpOpEx>
       <ar:ImpTrib>${det.impTrib}</ar:ImpTrib>
       <ar:ImpIVA>${det.impIVA}</ar:ImpIVA>
-      ${det.fchServDesde
-        ? `<ar:FchServDesde>${det.fchServDesde}</ar:FchServDesde>`
-        : ''}
-      ${det.fchServHasta
-        ? `<ar:FchServHasta>${det.fchServHasta}</ar:FchServHasta>`
-        : ''}
-      ${det.fchVtoPago
-        ? `<ar:FchVtoPago>${det.fchVtoPago}</ar:FchVtoPago>`
-        : ''}
+      ${
+        det.fchServDesde
+          ? `<ar:FchServDesde>${det.fchServDesde}</ar:FchServDesde>`
+          : ''
+      }
+      ${
+        det.fchServHasta
+          ? `<ar:FchServHasta>${det.fchServHasta}</ar:FchServHasta>`
+          : ''
+      }
+      ${
+        det.fchVtoPago ? `<ar:FchVtoPago>${det.fchVtoPago}</ar:FchVtoPago>` : ''
+      }
       <ar:MonId>${det.monId}</ar:MonId>
       <ar:MonCotiz>${det.monCotiz}</ar:MonCotiz>
-      ${det.canMisMonExt
-        ? `<ar:CanMisMonExt>${det.canMisMonExt}</ar:CanMisMonExt>`
-        : ''}
-      ${det.condicionIVAReceptorId
-        ? `<ar:CondicionIVAReceptorId>${det.condicionIVAReceptorId}</ar:CondicionIVAReceptorId>`
-        : ''}
-      ${det.cbtesAsoc && det.cbtesAsoc.length > 0
-        ? `<ar:CbtesAsoc>
+      ${
+        det.canMisMonExt
+          ? `<ar:CanMisMonExt>${det.canMisMonExt}</ar:CanMisMonExt>`
+          : ''
+      }
+      ${
+        det.condicionIVAReceptorId
+          ? `<ar:CondicionIVAReceptorId>${det.condicionIVAReceptorId}</ar:CondicionIVAReceptorId>`
+          : ''
+      }
+      ${
+        det.cbtesAsoc && det.cbtesAsoc.length > 0
+          ? `<ar:CbtesAsoc>
               ${det.cbtesAsoc
                 .map(
                   (c) => `
@@ -47,9 +56,11 @@ function renderDetalle(det: WsfeDetalle): string {
                 )
                 .join('')}
             </ar:CbtesAsoc>`
-        : ''}
-      ${det.tributos && det.tributos.length > 0
-        ? `<ar:Tributos>
+          : ''
+      }
+      ${
+        det.tributos && det.tributos.length > 0
+          ? `<ar:Tributos>
               ${det.tributos
                 .map(
                   (t) => `
@@ -63,9 +74,11 @@ function renderDetalle(det: WsfeDetalle): string {
                 )
                 .join('')}
             </ar:Tributos>`
-        : ''}
-      ${det.iva && det.iva.length > 0
-        ? `<ar:Iva>
+          : ''
+      }
+      ${
+        det.iva && det.iva.length > 0
+          ? `<ar:Iva>
               ${det.iva
                 .map(
                   (i) => `
@@ -77,9 +90,11 @@ function renderDetalle(det: WsfeDetalle): string {
                 )
                 .join('')}
             </ar:Iva>`
-        : ''}
-      ${det.opcionales && det.opcionales.length > 0
-        ? `<ar:Opcionales>
+          : ''
+      }
+      ${
+        det.opcionales && det.opcionales.length > 0
+          ? `<ar:Opcionales>
               ${det.opcionales
                 .map(
                   (o) => `
@@ -90,9 +105,11 @@ function renderDetalle(det: WsfeDetalle): string {
                 )
                 .join('')}
             </ar:Opcionales>`
-        : ''}
-      ${det.compradores && det.compradores.length > 0
-        ? `<ar:Compradores>
+          : ''
+      }
+      ${
+        det.compradores && det.compradores.length > 0
+          ? `<ar:Compradores>
               ${det.compradores
                 .map(
                   (co) => `
@@ -104,15 +121,19 @@ function renderDetalle(det: WsfeDetalle): string {
                 )
                 .join('')}
             </ar:Compradores>`
-        : ''}
-      ${det.periodoAsoc
-        ? `<ar:PeriodoAsoc>
+          : ''
+      }
+      ${
+        det.periodoAsoc
+          ? `<ar:PeriodoAsoc>
               <ar:FchDesde>${det.periodoAsoc.fchDesde}</ar:FchDesde>
               <ar:FchHasta>${det.periodoAsoc.fchHasta}</ar:FchHasta>
             </ar:PeriodoAsoc>`
-        : ''}
-      ${det.actividades && det.actividades.length > 0
-        ? `<ar:Actividades>
+          : ''
+      }
+      ${
+        det.actividades && det.actividades.length > 0
+          ? `<ar:Actividades>
               ${det.actividades
                 .map(
                   (a) => `
@@ -122,7 +143,8 @@ function renderDetalle(det: WsfeDetalle): string {
                 )
                 .join('')}
             </ar:Actividades>`
-        : ''}
+          : ''
+      }
     </ar:FECAEDetRequest>
   `;
 }
@@ -134,7 +156,7 @@ export function buildWsfeRequest({
 }: BuildWsfeRequestProps): string {
   const cantReg = detalles.length;
 
-  return /* HTML */ `
+  return `
     <soapenv:Envelope
       xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
       xmlns:ar="http://ar.gov.afip.dif.FEV1/"
