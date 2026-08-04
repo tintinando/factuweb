@@ -1,5 +1,5 @@
 import { XMLParser } from 'fast-xml-parser';
-import { FECAESolicitarResponse } from '../types';
+import { FECAESolicitarResponse } from '../types/types';
 
 export function parseFECAEResponse(xml: string): FECAESolicitarResponse {
   const parser = new XMLParser({
