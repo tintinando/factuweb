@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
-import { auth } from './routes/auth';
+import { auth } from './routes/auth.route';
 import { authMiddleware } from './middleware/auth.middleware';
+import { wsfeRecuperadorRoute } from './routes/recuperador.route';
 
 const app = new Hono();
 
@@ -22,5 +23,6 @@ app.get('/', (c) => {
 
 app.use('/api/*', authMiddleware);
 app.route('/api/auth', auth);
+app.route('/api/wsferecuperador', wsfeRecuperadorRoute);
 
 export default app;
