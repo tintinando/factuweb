@@ -5,8 +5,7 @@ import { buildLoginTicketRequest } from '../xmlBuilders/buildLoginTicketRequest'
 import { parseLoginCmsResult } from '../xmlParser/wsaaParser';
 import { parseLoginCmsErrorResult } from '../xmlParser/wsaaErrorParser';
 import { LoginCmsResponse } from '../types';
-
-const TIMEOUT = 15000;
+import { parameters } from '../../../config/constants';
 
 /**
  * Obtiene un Ticket de Acceso (TA) desde el WSAA de ARCA/AFIP.
@@ -36,7 +35,10 @@ export async function getArcaTA(config: AfipConfig): Promise<LoginCmsResponse> {
 
   // controlador para cancelar consulta
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
+  const timeoutId = setTimeout(
+    () => controller.abort(),
+    parameters.fetchTimeout
+  );
 
   try {
     const response = await fetch(config.urls.wsaa, {
