@@ -1,4 +1,5 @@
-import { BuildWsfeRequestProps, WsfeDetalle } from '../types';
+import { BuildWsfeRequestProps, WsfeDetalle } from '../types/types';
+import { buildWsfeEnvelope } from './buildEnvelope';
 
 function renderDetalle(det: WsfeDetalle): string {
   return `
@@ -156,13 +157,7 @@ export function buildWsfeRequest({
 }: BuildWsfeRequestProps): string {
   const cantReg = detalles.length;
 
-  return `
-    <soapenv:Envelope
-      xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:ar="http://ar.gov.afip.dif.FEV1/"
-    >
-      <soapenv:Header />
-      <soapenv:Body>
+  const xml = `
         <ar:FECAESolicitar>
           <ar:Auth>
             <ar:Token>${auth.token}</ar:Token>
@@ -180,7 +175,7 @@ export function buildWsfeRequest({
             </ar:FeDetReq>
           </ar:FeCAEReq>
         </ar:FECAESolicitar>
-      </soapenv:Body>
-    </soapenv:Envelope>
   `;
+
+  return buildWsfeEnvelope(xml);
 }
