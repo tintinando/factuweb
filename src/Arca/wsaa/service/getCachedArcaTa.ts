@@ -1,6 +1,6 @@
-import { AfipConfig } from '../../../config/afipConfig';
-import { CachedTA, LoginCmsResponse } from '../types';
-import { getArcaTA } from './wsaaService';
+import { AfipConfig } from "../../../config/afipConfig";
+import { CachedTA, LoginCmsResponse } from "../types";
+import { getArcaTA } from "./wsaaService";
 
 interface GetCachedArcaTAParams {
   cache: KVNamespace;
@@ -17,14 +17,14 @@ interface GetCachedArcaTAParams {
 export async function getCachedArcaTA({
   cache,
   config,
-  forceRefresh = false
+  forceRefresh = false,
 }: GetCachedArcaTAParams): Promise<LoginCmsResponse> {
-  const { cuit, pem, key, environment } = config;
+  const { cuit, environment } = config;
   const cacheKey = `afip_ta_${environment}_${cuit}`;
 
   // 1. Si no se fuerza el refresco, intentamos leer desde KV
   if (!forceRefresh) {
-    const cachedData = await cache.get<CachedTA>(cacheKey, 'json');
+    const cachedData = await cache.get<CachedTA>(cacheKey, "json");
 
     if (cachedData) {
       // Verificamos si aún le queda margen de tiempo (ej. más de 5 minutos antes de expirar)
@@ -50,9 +50,9 @@ export async function getCachedArcaTA({
     JSON.stringify({
       token: freshTA.token,
       sign: freshTA.sign,
-      expirationTime: freshTA.expirationTime
+      expirationTime: freshTA.expirationTime,
     }),
-    { expirationTtl: ttl }
+    { expirationTtl: ttl },
   );
 
   return freshTA;

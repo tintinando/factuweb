@@ -1,7 +1,7 @@
-export type Environment = 'testing' | 'production';
+export type Environment = "testing" | "production";
 
 export function isEnvironment(value: string): value is Environment {
-  return value === 'testing' || value === 'production';
+  return value === "testing" || value === "production";
 }
 
 export type Bindings = {

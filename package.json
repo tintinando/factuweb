@@ -9,18 +9,19 @@
   },
   "dependencies": {
     "fast-xml-parser": "5.10.1",
-    "hono": "4.12.34",
+    "hono": "4.13.2",
     "node-forge": "1.4.0",
     "soap": "1.10.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "5.20260731.1",
+    "@cloudflare/workers-types": "5.20260814.1",
     "@jest/globals": "30.4.1",
     "@types/jest": "30.0.0",
-    "@types/node": "26.1.2",
+    "@types/node": "26.2.0",
     "@types/node-forge": "1.3.14",
+    "oxlint": "^1.78.0",
     "prettier": "^3.9.6",
     "ts-jest": "29.4.12",
-    "wrangler": "4.118.0"
+    "wrangler": "4.123.0"
   }
 }

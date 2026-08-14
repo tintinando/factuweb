@@ -1,4 +1,4 @@
-import { Environment } from '../../types/env.types';
+import { Environment } from "../../types/env.types";
 
 export interface BuildLoginTicketRequestProps {
   env: Environment;

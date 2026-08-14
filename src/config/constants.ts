@@ -1,3 +1,3 @@
 export const parameters = {
-  fetchTimeout: 15000
+  fetchTimeout: 15000,
 };

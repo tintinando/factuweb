@@ -1,10 +1,10 @@
-import { XMLParser } from 'fast-xml-parser';
-import type { LoginCmsResponse } from '../types';
+import { XMLParser } from "fast-xml-parser";
+import type { LoginCmsResponse } from "../types";
 
 const parser = new XMLParser({
   ignoreAttributes: true,
   trimValues: true,
-  removeNSPrefix: true
+  removeNSPrefix: true,
 });
 
 export function parseLoginCmsResult(xml: string): LoginCmsResponse {
@@ -12,35 +12,35 @@ export function parseLoginCmsResult(xml: string): LoginCmsResponse {
   const body = parsed?.Envelope?.Body;
 
   if (!body) {
-    throw new Error('Estructura de respuesta del SOAP inválida');
+    throw new Error("Estructura de respuesta del SOAP inválida");
   }
 
   if (body.Fault) {
-    const faultMsg = body.Fault.faultstring || 'Error desconocido en el WSAA';
+    const faultMsg = body.Fault.faultstring || "Error desconocido en el WSAA";
     throw new Error(`Error en la respuesta SOAP: ${faultMsg}`);
   }
 
   const innerXml = body.loginCmsResponse?.loginCmsReturn;
 
   if (!innerXml) {
-    throw new Error('No se encontró el nodo loginCmsReturn en la respuesta');
+    throw new Error("No se encontró el nodo loginCmsReturn en la respuesta");
   }
 
   const parsedTicket = parser.parse(innerXml);
   const ticket = parsedTicket?.loginTicketResponse;
 
   if (!ticket) {
-    throw new Error('Formato de loginTicketResponse inválido');
+    throw new Error("Formato de loginTicketResponse inválido");
   }
 
   if (!ticket.credentials?.token || !ticket.credentials?.sign) {
-    throw new Error('El ticket de acceso no contiene las credenciales');
+    throw new Error("El ticket de acceso no contiene las credenciales");
   }
 
   return {
     token: ticket.credentials.token,
     sign: ticket.credentials.sign,
-    expirationTime: ticket.header?.expirationTime ?? ''
+    expirationTime: ticket.header?.expirationTime ?? "",
   };
 }
 

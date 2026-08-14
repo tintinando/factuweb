@@ -1,9 +1,9 @@
-import { XMLParser } from 'fast-xml-parser';
+import { XMLParser } from "fast-xml-parser";
 
 const parser = new XMLParser({
   ignoreAttributes: true,
   trimValues: true,
-  removeNSPrefix: true
+  removeNSPrefix: true,
 });
 
 export function parseLoginCmsErrorResult(xml: string) {

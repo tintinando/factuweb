@@ -1,13 +1,13 @@
 export type TipoRecuperador =
-  | 'FEParamGetTiposCbte'
-  | 'FEParamGetTiposConcepto'
-  | 'FEParamGetTiposDoc'
-  | 'FEParamGetTiposIva'
-  | 'FEParamGetTiposMonedas'
-  | 'FEParamGetTiposOpcional'
-  | 'FEParamGetTiposTributos'
-  | 'FEParamGetPtosVenta'
-  | 'FEParamGetCotizacion';
+  | "FEParamGetTiposCbte"
+  | "FEParamGetTiposConcepto"
+  | "FEParamGetTiposDoc"
+  | "FEParamGetTiposIva"
+  | "FEParamGetTiposMonedas"
+  | "FEParamGetTiposOpcional"
+  | "FEParamGetTiposTributos"
+  | "FEParamGetPtosVenta"
+  | "FEParamGetCotizacion";
 
 interface ErrorItem {
   code: number;

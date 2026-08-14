@@ -1,11 +1,11 @@
-import { AfipConfig } from '../../../config/afipConfig';
-import { signCms } from '../../../helpers/crypto';
-import { envelope } from '../xmlBuilders/buildEnvelope';
-import { buildLoginTicketRequest } from '../xmlBuilders/buildLoginTicketRequest';
-import { parseLoginCmsResult } from '../xmlParser/wsaaParser';
-import { parseLoginCmsErrorResult } from '../xmlParser/wsaaErrorParser';
-import { LoginCmsResponse } from '../types';
-import { parameters } from '../../../config/constants';
+import { AfipConfig } from "../../../config/afipConfig";
+import { signCms } from "../../../helpers/crypto";
+import { envelope } from "../xmlBuilders/buildEnvelope";
+import { buildLoginTicketRequest } from "../xmlBuilders/buildLoginTicketRequest";
+import { parseLoginCmsResult } from "../xmlParser/wsaaParser";
+import { parseLoginCmsErrorResult } from "../xmlParser/wsaaErrorParser";
+import { LoginCmsResponse } from "../types";
+import { parameters } from "../../../config/constants";
 
 /**
  * Obtiene un Ticket de Acceso (TA) desde el WSAA de ARCA/AFIP.
@@ -27,37 +27,32 @@ export async function getArcaTA(config: AfipConfig): Promise<LoginCmsResponse> {
   const rawCms = signCms({
     xml: buildLoginTicketRequest({
       env: config.environment,
-      cuit: config.cuit
+      cuit: config.cuit,
     }),
     certificatePem: config.pem,
-    privateKeyPem: config.key
+    privateKeyPem: config.key,
   });
 
   // controlador para cancelar consulta
   const controller = new AbortController();
-  const timeoutId = setTimeout(
-    () => controller.abort(),
-    parameters.fetchTimeout
-  );
+  const timeoutId = setTimeout(() => controller.abort(), parameters.fetchTimeout);
 
   try {
     const response = await fetch(config.urls.wsaa, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'text/xml; charset=utf-8',
-        SOAPAction: 'urn:LoginCms'
+        "Content-Type": "text/xml; charset=utf-8",
+        SOAPAction: "urn:LoginCms",
       },
       body: envelope(rawCms),
-      signal: controller.signal
+      signal: controller.signal,
     });
 
     const xml = await response.text();
 
     if (!response.ok) {
       const fault = parseLoginCmsErrorResult(xml);
-      throw new Error(
-        `HTTP ${response.status}: ${fault.faultcode} - ${fault.faultstring}`
-      );
+      throw new Error(`HTTP ${response.status}: ${fault.faultcode} - ${fault.faultstring}`);
     }
 
     return parseLoginCmsResult(xml);

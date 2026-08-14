@@ -1,92 +1,80 @@
-import { XMLParser } from 'fast-xml-parser';
-import {
-  RecuperadorResponseMap,
-  TipoRecuperador
-} from '../types/recuperador.types';
+import { XMLParser } from "fast-xml-parser";
+import { RecuperadorResponseMap, TipoRecuperador } from "../types/recuperador.types";
 
 const parser = new XMLParser({
   ignoreAttributes: true,
   trimValues: true,
-  removeNSPrefix: true
+  removeNSPrefix: true,
 });
 
 function parseTiposCbte(xml: string) {
   const parsedXml = parser.parse(xml);
-  return parsedXml.Envelope.Body.FEParamGetTiposCbteResponse
-    .FEParamGetTiposCbteResult;
+  return parsedXml.Envelope.Body.FEParamGetTiposCbteResponse.FEParamGetTiposCbteResult;
 }
 
 function parseTiposConcepto(xml: string) {
   const parsedXml = parser.parse(xml);
 
-  return parsedXml.Envelope.Body.FEParamGetTiposConceptoResponse
-    .FEParamGetTiposConceptoResult;
+  return parsedXml.Envelope.Body.FEParamGetTiposConceptoResponse.FEParamGetTiposConceptoResult;
 }
 
 function parseTiposDoc(xml: string) {
   const parsedXml = parser.parse(xml);
-  return parsedXml.Envelope.Body.FEParamGetTiposDocResponse
-    .FEParamGetTiposDocResult;
+  return parsedXml.Envelope.Body.FEParamGetTiposDocResponse.FEParamGetTiposDocResult;
 }
 
 function parseTiposIva(xml: string) {
   const parsedXml = parser.parse(xml);
-  return parsedXml.Envelope.Body.FEParamGetTiposIvaResponse
-    .FEParamGetTiposIvaResult;
+  return parsedXml.Envelope.Body.FEParamGetTiposIvaResponse.FEParamGetTiposIvaResult;
 }
 
 function parseTiposMonedas(xml: string) {
   const parsedXml = parser.parse(xml);
-  return parsedXml.Envelope.Body.FEParamGetTiposMonedasResponse
-    .FEParamGetTiposMonedasResult;
+  return parsedXml.Envelope.Body.FEParamGetTiposMonedasResponse.FEParamGetTiposMonedasResult;
 }
 
 function parseTiposOpcional(xml: string) {
   const parsedXml = parser.parse(xml);
-  return parsedXml.Envelope.Body.FEParamGetTiposOpcionalResponse
-    .FEParamGetTiposOpcionalResult;
+  return parsedXml.Envelope.Body.FEParamGetTiposOpcionalResponse.FEParamGetTiposOpcionalResult;
 }
 
 function parseTiposTributos(xml: string) {
   const parsedXml = parser.parse(xml);
-  return parsedXml.Envelope.Body.FEParamGetTiposTributosResponse
-    .FEParamGetTiposTributosResult;
+  return parsedXml.Envelope.Body.FEParamGetTiposTributosResponse.FEParamGetTiposTributosResult;
 }
 
 function parsePuntosVenta(xml: string) {
   const parsedXml = parser.parse(xml);
-  return parsedXml.Envelope.Body.FEParamGetPtosVentaResponse
-    .FEParamGetPtosVentaResult;
+  return parsedXml.Envelope.Body.FEParamGetPtosVentaResponse.FEParamGetPtosVentaResult;
 }
 
 function parseCotizacion(xml: string) {
   const parsedXml = parser.parse(xml);
-  return parsedXml.Envelope.Body.FEParamGetCotizacionResponse
-    .FEParamGetCotizacionResult;
+  return parsedXml.Envelope.Body.FEParamGetCotizacionResponse.FEParamGetCotizacionResult;
 }
 
 export function parseWsfeRecuperador<T extends TipoRecuperador>(
   type: T,
-  xml: string
+  xml: string,
 ): RecuperadorResponseMap[T] {
   switch (type) {
-    case 'FEParamGetTiposCbte':
+    case "FEParamGetTiposCbte":
       return parseTiposCbte(xml);
-    case 'FEParamGetTiposConcepto':
+    case "FEParamGetTiposConcepto":
       return parseTiposConcepto(xml);
-    case 'FEParamGetTiposDoc':
+    case "FEParamGetTiposDoc":
       return parseTiposDoc(xml);
-    case 'FEParamGetTiposIva':
+    case "FEParamGetTiposIva":
       return parseTiposIva(xml);
-    case 'FEParamGetTiposMonedas':
+    case "FEParamGetTiposMonedas":
       return parseTiposMonedas(xml);
-    case 'FEParamGetTiposOpcional':
+    case "FEParamGetTiposOpcional":
       return parseTiposOpcional(xml);
-    case 'FEParamGetTiposTributos':
+    case "FEParamGetTiposTributos":
       return parseTiposTributos(xml);
-    case 'FEParamGetPtosVenta':
+    case "FEParamGetPtosVenta":
       return parsePuntosVenta(xml);
-    case 'FEParamGetCotizacion':
+    case "FEParamGetCotizacion":
       return parseCotizacion(xml);
   }
 }

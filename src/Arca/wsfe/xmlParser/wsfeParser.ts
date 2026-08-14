@@ -1,11 +1,11 @@
-import { XMLParser } from 'fast-xml-parser';
-import { FECAESolicitarResponse } from '../types/types';
+import { XMLParser } from "fast-xml-parser";
+import { FECAESolicitarResponse } from "../types/types";
 
 export function parseFECAEResponse(xml: string): FECAESolicitarResponse {
   const parser = new XMLParser({
     ignoreAttributes: true,
     trimValues: true,
-    removeNSPrefix: true
+    removeNSPrefix: true,
   });
 
   return parser.parse(xml);

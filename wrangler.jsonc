@@ -5,15 +5,15 @@
   "compatibility_date": "2026-07-26",
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
-    "ENVIRONMENT": "testing"
+    "ENVIRONMENT": "testing",
   },
   "env": {
     "production": {
       "name": "factuweb-prod",
       "vars": {
-        "ENVIRONMENT": "production"
-      }
-    }
+        "ENVIRONMENT": "production",
+      },
+    },
   },
   "observability": {
     "enabled": false,
@@ -22,18 +22,18 @@
       "enabled": true,
       "head_sampling_rate": 1,
       "persist": true,
-      "invocation_logs": true
+      "invocation_logs": true,
     },
     "traces": {
       "enabled": false,
       "persist": true,
-      "head_sampling_rate": 1
-    }
+      "head_sampling_rate": 1,
+    },
   },
   "kv_namespaces": [
     {
       "binding": "AFIP_CACHE",
-      "id": "986f7c46cb174e9daa3ab7cffef7f1e7"
-    }
-  ]
+      "id": "986f7c46cb174e9daa3ab7cffef7f1e7",
+    },
+  ],
 }

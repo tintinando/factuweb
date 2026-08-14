@@ -1,5 +1,5 @@
-import { BuildWsfeRequestProps, WsfeDetalle } from '../types/types';
-import { buildWsfeEnvelope } from './buildEnvelope';
+import { BuildWsfeRequestProps, WsfeDetalle } from "../types/types";
+import { buildWsfeEnvelope } from "./buildEnvelope";
 
 function renderDetalle(det: WsfeDetalle): string {
   return `
@@ -16,30 +16,16 @@ function renderDetalle(det: WsfeDetalle): string {
       <ar:ImpOpEx>${det.impOpEx}</ar:ImpOpEx>
       <ar:ImpTrib>${det.impTrib}</ar:ImpTrib>
       <ar:ImpIVA>${det.impIVA}</ar:ImpIVA>
-      ${
-        det.fchServDesde
-          ? `<ar:FchServDesde>${det.fchServDesde}</ar:FchServDesde>`
-          : ''
-      }
-      ${
-        det.fchServHasta
-          ? `<ar:FchServHasta>${det.fchServHasta}</ar:FchServHasta>`
-          : ''
-      }
-      ${
-        det.fchVtoPago ? `<ar:FchVtoPago>${det.fchVtoPago}</ar:FchVtoPago>` : ''
-      }
+      ${det.fchServDesde ? `<ar:FchServDesde>${det.fchServDesde}</ar:FchServDesde>` : ""}
+      ${det.fchServHasta ? `<ar:FchServHasta>${det.fchServHasta}</ar:FchServHasta>` : ""}
+      ${det.fchVtoPago ? `<ar:FchVtoPago>${det.fchVtoPago}</ar:FchVtoPago>` : ""}
       <ar:MonId>${det.monId}</ar:MonId>
       <ar:MonCotiz>${det.monCotiz}</ar:MonCotiz>
-      ${
-        det.canMisMonExt
-          ? `<ar:CanMisMonExt>${det.canMisMonExt}</ar:CanMisMonExt>`
-          : ''
-      }
+      ${det.canMisMonExt ? `<ar:CanMisMonExt>${det.canMisMonExt}</ar:CanMisMonExt>` : ""}
       ${
         det.condicionIVAReceptorId
           ? `<ar:CondicionIVAReceptorId>${det.condicionIVAReceptorId}</ar:CondicionIVAReceptorId>`
-          : ''
+          : ""
       }
       ${
         det.cbtesAsoc && det.cbtesAsoc.length > 0
@@ -51,13 +37,13 @@ function renderDetalle(det: WsfeDetalle): string {
                   <ar:Tipo>${c.tipo}</ar:Tipo>
                   <ar:PtoVta>${c.ptoVta}</ar:PtoVta>
                   <ar:Nro>${c.nro}</ar:Nro>
-                  ${c.cuit ? `<ar:Cuit>${c.cuit}</ar:Cuit>` : ''}
-                  ${c.cbteFch ? `<ar:CbteFch>${c.cbteFch}</ar:CbteFch>` : ''}
-                </ar:CbteAsoc>`
+                  ${c.cuit ? `<ar:Cuit>${c.cuit}</ar:Cuit>` : ""}
+                  ${c.cbteFch ? `<ar:CbteFch>${c.cbteFch}</ar:CbteFch>` : ""}
+                </ar:CbteAsoc>`,
                 )
-                .join('')}
+                .join("")}
             </ar:CbtesAsoc>`
-          : ''
+          : ""
       }
       ${
         det.tributos && det.tributos.length > 0
@@ -67,15 +53,15 @@ function renderDetalle(det: WsfeDetalle): string {
                   (t) => `
                 <ar:Tributo>
                   <ar:Id>${t.id}</ar:Id>
-                  ${t.desc ? `<ar:Desc>${t.desc}</ar:Desc>` : ''}
+                  ${t.desc ? `<ar:Desc>${t.desc}</ar:Desc>` : ""}
                   <ar:BaseImp>${t.baseImp}</ar:BaseImp>
                   <ar:Alic>${t.alic}</ar:Alic>
                   <ar:Importe>${t.importe}</ar:Importe>
-                </ar:Tributo>`
+                </ar:Tributo>`,
                 )
-                .join('')}
+                .join("")}
             </ar:Tributos>`
-          : ''
+          : ""
       }
       ${
         det.iva && det.iva.length > 0
@@ -87,11 +73,11 @@ function renderDetalle(det: WsfeDetalle): string {
                   <ar:Id>${i.id}</ar:Id>
                   <ar:BaseImp>${i.baseImp}</ar:BaseImp>
                   <ar:Importe>${i.importe}</ar:Importe>
-                </ar:AlicIva>`
+                </ar:AlicIva>`,
                 )
-                .join('')}
+                .join("")}
             </ar:Iva>`
-          : ''
+          : ""
       }
       ${
         det.opcionales && det.opcionales.length > 0
@@ -102,11 +88,11 @@ function renderDetalle(det: WsfeDetalle): string {
                 <ar:Opcional>
                   <ar:Id>${o.id}</ar:Id>
                   <ar:Valor>${o.valor}</ar:Valor>
-                </ar:Opcional>`
+                </ar:Opcional>`,
                 )
-                .join('')}
+                .join("")}
             </ar:Opcionales>`
-          : ''
+          : ""
       }
       ${
         det.compradores && det.compradores.length > 0
@@ -118,11 +104,11 @@ function renderDetalle(det: WsfeDetalle): string {
                   <ar:DocTipo>${co.docTipo}</ar:DocTipo>
                   <ar:DocNro>${co.docNro}</ar:DocNro>
                   <ar:Porcentaje>${co.porcentaje}</ar:Porcentaje>
-                </ar:Comprador>`
+                </ar:Comprador>`,
                 )
-                .join('')}
+                .join("")}
             </ar:Compradores>`
-          : ''
+          : ""
       }
       ${
         det.periodoAsoc
@@ -130,7 +116,7 @@ function renderDetalle(det: WsfeDetalle): string {
               <ar:FchDesde>${det.periodoAsoc.fchDesde}</ar:FchDesde>
               <ar:FchHasta>${det.periodoAsoc.fchHasta}</ar:FchHasta>
             </ar:PeriodoAsoc>`
-          : ''
+          : ""
       }
       ${
         det.actividades && det.actividades.length > 0
@@ -140,21 +126,17 @@ function renderDetalle(det: WsfeDetalle): string {
                   (a) => `
                 <ar:Actividad>
                   <ar:Id>${a.id}</ar:Id>
-                </ar:Actividad>`
+                </ar:Actividad>`,
                 )
-                .join('')}
+                .join("")}
             </ar:Actividades>`
-          : ''
+          : ""
       }
     </ar:FECAEDetRequest>
   `;
 }
 
-export function buildWsfeRequest({
-  auth,
-  header,
-  detalles
-}: BuildWsfeRequestProps): string {
+export function buildWsfeRequest({ auth, header, detalles }: BuildWsfeRequestProps): string {
   const cantReg = detalles.length;
 
   const xml = `
@@ -171,7 +153,7 @@ export function buildWsfeRequest({
               <ar:CbteTipo>${header.cbteTipo}</ar:CbteTipo>
             </ar:FeCabReq>
             <ar:FeDetReq>
-              ${detalles.map((det) => renderDetalle(det)).join('')}
+              ${detalles.map((det) => renderDetalle(det)).join("")}
             </ar:FeDetReq>
           </ar:FeCAEReq>
         </ar:FECAESolicitar>
