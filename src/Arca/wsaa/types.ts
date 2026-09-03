@@ -2,7 +2,6 @@ import { Environment } from "../../types/env.types";
 
 export interface BuildLoginTicketRequestProps {
   env: Environment;
-  cuit: string;
 }
 
 export interface CachedTA {

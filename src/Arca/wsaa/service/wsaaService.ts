@@ -27,7 +27,6 @@ export async function getArcaTA(config: AfipConfig): Promise<LoginCmsResponse> {
   const rawCms = signCms({
     xml: buildLoginTicketRequest({
       env: config.environment,
-      cuit: config.cuit,
     }),
     certificatePem: config.pem,
     privateKeyPem: config.key,

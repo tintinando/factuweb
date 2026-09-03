@@ -1,39 +1,47 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "factuweb",
-  "main": "src/index.ts",
-  "compatibility_date": "2026-07-26",
-  "compatibility_flags": ["nodejs_compat"],
-  "vars": {
-    "ENVIRONMENT": "testing",
-  },
-  "env": {
-    "production": {
-      "name": "factuweb-prod",
-      "vars": {
-        "ENVIRONMENT": "production",
-      },
-    },
-  },
-  "observability": {
-    "enabled": false,
-    "head_sampling_rate": 1,
-    "logs": {
-      "enabled": true,
-      "head_sampling_rate": 1,
-      "persist": true,
-      "invocation_logs": true,
-    },
-    "traces": {
-      "enabled": false,
-      "persist": true,
-      "head_sampling_rate": 1,
-    },
-  },
-  "kv_namespaces": [
-    {
-      "binding": "AFIP_CACHE",
-      "id": "986f7c46cb174e9daa3ab7cffef7f1e7",
-    },
-  ],
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "factuweb",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-07-26",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"vars": {
+		"ENVIRONMENT": "testing",
+	},
+	"env": {
+		"production": {
+			"name": "factuweb-prod",
+			"vars": {
+				"ENVIRONMENT": "production",
+			},
+			"kv_namespaces": [
+				{
+					"binding": "AFIP_CACHE",
+					"id": "c6d61f7ec8b1431eaefda12afac20f0f"
+				}
+			],
+		},
+	},
+	"observability": {
+		"enabled": false,
+		"head_sampling_rate": 1,
+		"logs": {
+			"enabled": true,
+			"head_sampling_rate": 1,
+			"persist": true,
+			"invocation_logs": true,
+		},
+		"traces": {
+			"enabled": false,
+			"persist": true,
+			"head_sampling_rate": 1,
+		},
+	},
+	"kv_namespaces": [
+		{
+			"binding": "AFIP_CACHE",
+			"id": "986f7c46cb174e9daa3ab7cffef7f1e7",
+		},
+	],
 }
